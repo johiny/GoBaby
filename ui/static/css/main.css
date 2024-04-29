@@ -135,6 +135,37 @@ tr:nth-child(even) {
   background-color: #222;
 }
 
+/* Register and Login View */
+.auth_title{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.auth_form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.auth_input{
+ width: 80%;
+ padding:  0.5rem 1rem;
+ border: 1px solid #fff;
+ background-color: #000;
+ color: #fff;
+ font-size: 1rem;
+}
+.auth_input:focus{
+  outline: none;
+}
+.auth_input::placeholder{
+  text-align: center;
+  color: rgba(240, 248, 255, 0.644);
+}
+
 /* Animations */
 
 .pulsing {

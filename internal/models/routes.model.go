@@ -9,6 +9,8 @@ type Routes struct {
 	LOG_TABLE     string
 	ERROR         string
 	CLEAR_ERROR   string
+	LOGIN         string
+	REGISTER      string
 }
 
 var RoutesInstance = Routes{
@@ -20,4 +22,6 @@ var RoutesInstance = Routes{
 	LOG_TABLE:     "/log-table",
 	ERROR:         "/error",
 	CLEAR_ERROR:   "/clear-error",
+	LOGIN:         "/login",
+	REGISTER:      "/register",
 }

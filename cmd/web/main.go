@@ -3,6 +3,7 @@ package main
 import (
 	repository_domain "GoBaby/cmd/web/domain/repository"
 	"GoBaby/cmd/web/routes"
+	"GoBaby/cmd/web/routes/authRoutes"
 	"GoBaby/cmd/web/routes/mainRoute"
 	"context"
 	"log"
@@ -16,6 +17,8 @@ func InitRoutes() {
 	routes.ErrorRender()
 	mainRoute.MainRender()
 	mainRoute.ClockRender()
+	authRoutes.RegisterRender()
+	authRoutes.LoginRender()
 }
 
 func main() {

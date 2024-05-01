@@ -15,3 +15,14 @@ func LoginView(w http.ResponseWriter, r *http.Request) {
 	utils.CheckIfPath(w, r, models.RoutesInstance.LOGIN)
 	utils.ParseTemplateFiles(w, "base", utils.EmptyStruct, utils.EmptyFuncMap, ui.Content, files...)
 }
+
+func LoginAction(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Error al parsear el formulario", http.StatusInternalServerError)
+		return
+	}
+	Email := r.Form.Get("Email")
+	Password := r.Form.Get("Password")
+	println(Email, Password)
+}

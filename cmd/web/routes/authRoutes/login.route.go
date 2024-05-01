@@ -8,4 +8,5 @@ import (
 
 func LoginRender() {
 	routes.GetMuxInstance().HandleFunc("GET "+models.RoutesInstance.LOGIN, authDomain.LoginView)
+	routes.GetMuxInstance().HandleFunc("POST "+models.RoutesInstance.LOGIN, authDomain.LoginAction)
 }

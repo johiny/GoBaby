@@ -8,4 +8,5 @@ import (
 
 func RegisterRender() {
 	routes.GetMuxInstance().HandleFunc("GET "+models.RoutesInstance.REGISTER, authDomain.RegisterView)
+	routes.GetMuxInstance().HandleFunc("POST "+models.RoutesInstance.REGISTER, authDomain.RegisterAction)
 }

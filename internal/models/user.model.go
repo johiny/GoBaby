@@ -5,5 +5,5 @@ type User struct {
 	Email    string `bson:"email"`
 	Password string `bson:"password"`
 	Logs     []Log  `bson:"logs"`
-	Id       int    `bson:"_id, omitempty"`
+	Id       string `bson:"_id"`
 }

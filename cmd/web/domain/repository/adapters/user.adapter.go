@@ -3,6 +3,7 @@ package repository_adapters
 import (
 	db_config "GoBaby/cmd/web/domain/repository/config"
 	"GoBaby/internal/models"
+	dbUtils "GoBaby/internal/utils/db"
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -36,6 +37,11 @@ func GetUserByUUID(uuid int) (models.User, *models.AppError) {
 }
 
 func SetUser(user *models.User) *models.AppError {
+	UUID, idError := dbUtils.GetRandomUUID()
+	if idError != nil {
+		return idError
+	}
+	user.Id = UUID
 	_, err := db_config.UserCollection.InsertOne(context.TODO(), user)
 	if err != nil {
 		return &models.AppError{

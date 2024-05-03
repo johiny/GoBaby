@@ -43,17 +43,31 @@ func InitializeDb() (*mongo.Client, *models.AppError) {
 			Err:     err,
 		}
 	}
-
 	UserCollection = InitializeUsersCollection(client)
+	// created unique index on email field
+	_, err = UserCollection.Indexes().CreateOne(
+		context.TODO(),
+		mongo.IndexModel{
+			Keys:    bson.D{{Key: "email", Value: 1}},
+			Options: options.Index().SetUnique(true),
+		},
+	)
+	if err != nil {
+		return nil, &models.AppError{
+			Message: "failed to create unique index on email",
+			Code:    500,
+			Err:     err,
+		}
+	}
 	MonitorCollection = InitializeMonitorCollection(client)
 
 	// check if the user with _id equal to 0 exists
-	result := UserCollection.FindOne(context.TODO(), bson.M{"_id": 0})
+	result := UserCollection.FindOne(context.TODO(), bson.M{"_id": "0"})
 
 	if err := result.Err(); err != nil {
 		if err == mongo.ErrNoDocuments {
 			// if there is an error that means that the user has not been found so we can create a new one
-			user := models.User{UserName: "test", Logs: make([]models.Log, 0), Id: 0}
+			user := models.User{UserName: "admin", Email: "BabyAdmin@BabyAdmin.com", Password: "XXXX", Logs: make([]models.Log, 0), Id: "0"}
 
 			_, err := UserCollection.InsertOne(context.TODO(), user)
 			if err != nil {

@@ -1,9 +1,14 @@
 package authDomain
 
 import (
+	errorDomain "GoBaby/cmd/web/domain/error"
+	repository_adapters "GoBaby/cmd/web/domain/repository/adapters"
 	"GoBaby/internal/models"
 	"GoBaby/internal/utils"
+	AuthUtils "GoBaby/internal/utils/auth"
+	formUtils "GoBaby/internal/utils/form"
 	"GoBaby/ui"
+	"fmt"
 	"net/http"
 )
 
@@ -17,13 +22,27 @@ func RegisterView(w http.ResponseWriter, r *http.Request) {
 }
 
 func RegisterAction(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
+	formValues, err := formUtils.GetFormValues(r, []string{"Email", "Password", "Username"})
 	if err != nil {
-		http.Error(w, "Error al parsear el formulario", http.StatusInternalServerError)
+		errorDomain.ErrorTemplate(w, r, err)
 		return
 	}
-	Email := r.Form.Get("Email")
-	Username := r.Form.Get("Username")
-	Password := r.Form.Get("Password")
-	println(Email, Username, Password)
+
+	encryptedPass, err := AuthUtils.EncryptPassword(formValues["Password"])
+	if err != nil {
+		errorDomain.ErrorTemplate(w, r, err)
+		return
+	}
+	user := models.User{
+		Email:    formValues["Email"],
+		Password: encryptedPass,
+		UserName: formValues["Username"],
+	}
+	err = repository_adapters.SetUser(&user)
+	if err != nil {
+		fmt.Println("Error:", err.Err.Error())
+		errorDomain.ErrorTemplate(w, r, err)
+		return
+	}
+
 }

@@ -3,6 +3,7 @@ module GoBaby
 go 1.22
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect

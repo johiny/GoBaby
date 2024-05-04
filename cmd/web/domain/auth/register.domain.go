@@ -44,5 +44,10 @@ func RegisterAction(w http.ResponseWriter, r *http.Request) {
 		errorDomain.ErrorTemplate(w, r, err)
 		return
 	}
-
+	err1 := SetSession(user, w)
+	if err1 != nil {
+		fmt.Println("Error:", err1.Error())
+		return
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
 }

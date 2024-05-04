@@ -48,9 +48,8 @@ func ValidateToken(tokenString string) (string, error) {
 	return "", fmt.Errorf("token inválido")
 }
 
-func SetTokenOnCookie(w http.ResponseWriter, r *http.Request) {
+func SetTokenOnCookie(w http.ResponseWriter, userEmail string) {
 	// obtener email del usuario de la request
-	userEmail := r.FormValue("user_email")
 	user := store.GetUser(userEmail)
 	if user == nil {
 		fmt.Println("usuario no encontrado")

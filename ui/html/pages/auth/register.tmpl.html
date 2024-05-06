@@ -2,7 +2,7 @@
 <div class="auth_title">
 <h1>First-time Parent?<br/>Join the Family!</h1>
 </div>
-<form class="auth_form" hx-post="/register">
+<form class="auth_form" hx-post="/register" hx-redirect="/" hx-target="body" hx-swap="outerHTML" hx-push-url="true">
 <input class="auth_input" type="email" name="Email"  placeholder="Email" required/>
 <input class="auth_input" type="text"  name="Username" placeholder="User" required/>
 <input class="auth_input" type="password"  name="Password"  placeholder="Password" required minlength="8"/>

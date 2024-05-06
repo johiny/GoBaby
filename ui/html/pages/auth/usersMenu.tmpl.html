@@ -1,0 +1,9 @@
+{{define "usersMenu"}}
+<ul>
+        {{range .}}
+        <li>
+            <button hx-get="/change-user?email={{.email}}"  hx-trigger="click"  hx-redirect="/" hx-target="body" hx-swap="outerHTML" hx-push-url="true">{{.user}}</button>
+        </li>
+        {{end}}
+</ul>
+{{end}}

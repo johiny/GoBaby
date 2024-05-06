@@ -41,8 +41,8 @@ func ValidateToken(tokenString string) (string, error) {
 
 	// Validar si el token es válido
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		user := claims["email"].(string)
-		return user, nil
+		email := claims["email"].(string)
+		return email, nil
 	}
 
 	return "", fmt.Errorf("token inválido")

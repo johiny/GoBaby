@@ -11,6 +11,8 @@ type Routes struct {
 	CLEAR_ERROR   string
 	LOGIN         string
 	REGISTER      string
+	USERMENU      string
+	CHANGEUSER    string
 }
 
 var RoutesInstance = Routes{
@@ -24,4 +26,6 @@ var RoutesInstance = Routes{
 	CLEAR_ERROR:   "/clear-error",
 	LOGIN:         "/login",
 	REGISTER:      "/register",
+	USERMENU:      "/user-menu",
+	CHANGEUSER:    "/change-user",
 }

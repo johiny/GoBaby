@@ -4,8 +4,10 @@ import (
 	errorDomain "GoBaby/cmd/web/domain/error"
 	repository_domain "GoBaby/cmd/web/domain/repository"
 	"GoBaby/internal/models"
+	"GoBaby/internal/store"
 	"GoBaby/internal/utils"
 	"GoBaby/ui"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -19,7 +21,7 @@ type LogViewModel struct {
 func LogTable(w http.ResponseWriter, r *http.Request) {
 	utils.CheckIfPath(w, r, models.RoutesInstance.LOG_TABLE)
 
-	user, err := repository_domain.GetUserByUUID(0)
+	user, err := repository_domain.GetUserByEmail(store.UserStore.CurrentUser["email"])
 	if err != nil {
 		errorDomain.ErrorTemplate(w, r, err)
 	} else {
@@ -42,9 +44,13 @@ func LogView(w http.ResponseWriter, r *http.Request) {
 }
 
 func SaveLog(countdown int) *models.AppError {
-	uuid := 0
+	user, err := repository_domain.GetUserByEmail(store.UserStore.CurrentUser["email"])
+	if err != nil {
+		fmt.Println(err)
+	}
+	uuid := user.Id
 	currentTime := time.Now()
 	primitiveDateTime := primitive.NewDateTimeFromTime(currentTime)
-	err := repository_domain.AddLogByUUID(uuid, models.Log{Date: primitiveDateTime, Duration: countdown})
+	err = repository_domain.AddLogByUUID(uuid, models.Log{Date: primitiveDateTime, Duration: countdown})
 	return err
 }

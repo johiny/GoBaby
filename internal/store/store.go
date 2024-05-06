@@ -8,8 +8,9 @@ import (
 var MaxSize = 10
 
 var UserStore = &models.UserStore{
-	MaxSize: MaxSize,
-	Users:   make([]map[string]string, 0, MaxSize),
+	MaxSize:     MaxSize,
+	Users:       make([]map[string]string, 0, MaxSize),
+	CurrentUser: nil,
 }
 
 // AddUser agrega un nuevo usuario a la cola de usuarios activamente logueados
@@ -25,6 +26,7 @@ func AddUser(user models.User, jwt_token string) {
 	}
 	// Agregar el nuevo elemento al final de la cola
 	UserStore.Users = append(UserStore.Users, newUser)
+	UserStore.CurrentUser = newUser
 	fmt.Println(UserStore.Users)
 }
 

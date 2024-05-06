@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func GetUserByUUID(uuid int) (models.User, *models.AppError) {
+func GetUserByUUID(uuid string) (models.User, *models.AppError) {
 	filter := bson.D{
 		{
 			Key: "$and",
@@ -36,6 +36,33 @@ func GetUserByUUID(uuid int) (models.User, *models.AppError) {
 	return result, error
 }
 
+func GetUserByEmail(email string) (models.User, *models.AppError) {
+	filter := bson.D{
+		{
+			Key: "$and",
+			Value: bson.A{
+				bson.D{
+					{Key: "email", Value: email},
+				},
+			},
+		},
+	}
+
+	var result models.User
+	var error *models.AppError
+
+	err := db_config.UserCollection.FindOne(context.TODO(), filter).Decode(&result)
+	if err != nil {
+		error = &models.AppError{
+			Message: "failed to get user by email",
+			Code:    models.ErrNotFound,
+			Err:     err,
+		}
+	}
+
+	return result, error
+}
+
 func SetUser(user *models.User) *models.AppError {
 	UUID, idError := dbUtils.GetRandomUUID()
 	if idError != nil {
@@ -54,7 +81,7 @@ func SetUser(user *models.User) *models.AppError {
 	return nil
 }
 
-func AddLogByUUID(uuid int, log models.Log) *models.AppError {
+func AddLogByUUID(uuid string, log models.Log) *models.AppError {
 	// create a filter to find the user by uuid
 	filter := bson.M{"_id": uuid}
 

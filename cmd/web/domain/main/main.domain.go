@@ -1,6 +1,7 @@
 package mainDomain
 
 import (
+	authDomain "GoBaby/cmd/web/domain/auth"
 	"GoBaby/internal/models"
 	"GoBaby/internal/utils"
 	"GoBaby/ui"
@@ -8,6 +9,11 @@ import (
 )
 
 func MainView(w http.ResponseWriter, r *http.Request) {
+	err := authDomain.CheckSession(r)
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
 	utils.CheckIfPath(w, r, models.RoutesInstance.MAIN)
 
 	files := []string{

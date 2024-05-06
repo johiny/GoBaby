@@ -19,6 +19,7 @@ func InitRoutes() {
 	mainRoute.ClockRender()
 	authRoutes.RegisterRender()
 	authRoutes.LoginRender()
+	routes.UserMenuRender()
 }
 
 func main() {

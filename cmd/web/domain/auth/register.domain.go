@@ -49,5 +49,5 @@ func RegisterAction(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error:", err1.Error())
 		return
 	}
-	http.Redirect(w, r, "/", http.StatusFound)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

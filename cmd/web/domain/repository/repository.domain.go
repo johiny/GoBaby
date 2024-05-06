@@ -17,15 +17,19 @@ func InitializeBD() {
 	}
 }
 
-func GetUserByUUID(uuid int) (models.User, *models.AppError) {
+func GetUserByUUID(uuid string) (models.User, *models.AppError) {
 	return repository_adapters.GetUserByUUID(uuid)
+}
+
+func GetUserByEmail(email string) (models.User, *models.AppError) {
+	return repository_adapters.GetUserByEmail(email)
 }
 
 func SetUser(user *models.User) *models.AppError {
 	return repository_adapters.SetUser(user)
 }
 
-func AddLogByUUID(uuid int, log models.Log) *models.AppError {
+func AddLogByUUID(uuid string, log models.Log) *models.AppError {
 	return repository_adapters.AddLogByUUID(uuid, log)
 }
 
